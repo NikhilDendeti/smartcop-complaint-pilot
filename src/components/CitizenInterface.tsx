@@ -4,17 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, Mic, Plus, Eye, FileText, Download, Sparkles, TrendingUp } from "lucide-react";
+import { ArrowLeft, Mic, Plus, Eye, FileText, Download, Sparkles, TrendingUp, Phone, AlertTriangle } from "lucide-react";
 import VoiceComplaintForm from "./VoiceComplaintForm";
+import ComplaintDetails from "./ComplaintDetails";
+import LegalResources from "./LegalResources";
 
 interface CitizenInterfaceProps {
   onBack: () => void;
 }
 
 const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
-  const [currentView, setCurrentView] = useState<'dashboard' | 'new-complaint' | 'view-complaint'>('dashboard');
+  const [currentView, setCurrentView] = useState<'dashboard' | 'new-complaint' | 'view-complaint' | 'legal-resources'>('dashboard');
+  const [selectedComplaintId, setSelectedComplaintId] = useState<string | null>(null);
 
-  // Mock complaint data
+  // Comprehensive mock complaint data
   const complaints = [
     {
       id: 'FIR001',
@@ -22,7 +25,15 @@ const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
       date: '2024-01-15',
       status: 'Under Investigation',
       officer: 'Inspector Rajesh Kumar',
-      progress: 65
+      progress: 65,
+      location: 'Bus Stand, Hyderabad',
+      description: 'My Samsung Galaxy S23 was stolen from my bag while traveling on bus from Secunderabad to Kukatpally around 3 PM.',
+      evidence: ['CCTV footage requested', 'Bus ticket submitted', 'Phone IMEI registered'],
+      updates: [
+        { date: '2024-01-16', message: 'FIR registered successfully', officer: 'Constable Priya Sharma' },
+        { date: '2024-01-18', message: 'CCTV footage reviewed, suspect identified', officer: 'Inspector Rajesh Kumar' },
+        { date: '2024-01-20', message: 'Investigation ongoing, checking nearby areas', officer: 'Inspector Rajesh Kumar' }
+      ]
     },
     {
       id: 'FIR002', 
@@ -30,7 +41,30 @@ const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
       date: '2024-01-10',
       status: 'Resolved',
       officer: 'Sub-Inspector Priya Sharma',
-      progress: 100
+      progress: 100,
+      location: 'Banjara Hills, Hyderabad',
+      description: 'Loud music and noise from neighboring construction site disturbing residents daily from 6 AM to 10 PM.',
+      evidence: ['Sound level measurements', 'Video recordings', 'Neighbor testimonies'],
+      updates: [
+        { date: '2024-01-11', message: 'Complaint registered and site visited', officer: 'Sub-Inspector Priya Sharma' },
+        { date: '2024-01-12', message: 'Notice issued to construction company', officer: 'Sub-Inspector Priya Sharma' },
+        { date: '2024-01-14', message: 'Sound levels reduced, compliance achieved', officer: 'Sub-Inspector Priya Sharma' }
+      ]
+    },
+    {
+      id: 'FIR003',
+      title: 'Domestic Violence Report',
+      date: '2024-01-08',
+      status: 'Under Investigation',
+      officer: 'Inspector Meera Reddy',
+      progress: 45,
+      location: 'Jubilee Hills, Hyderabad',
+      description: 'Physical assault by spouse with threats and verbal abuse. Medical treatment sought for injuries.',
+      evidence: ['Medical reports', 'Injury photographs', 'Witness statements'],
+      updates: [
+        { date: '2024-01-09', message: 'Emergency response provided, medical aid arranged', officer: 'Inspector Meera Reddy' },
+        { date: '2024-01-11', message: 'Counseling session arranged, legal aid contacted', officer: 'Inspector Meera Reddy' }
+      ]
     }
   ];
 
@@ -43,8 +77,22 @@ const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
     }
   };
 
+  const handleViewComplaint = (complaintId: string) => {
+    setSelectedComplaintId(complaintId);
+    setCurrentView('view-complaint');
+  };
+
   if (currentView === 'new-complaint') {
     return <VoiceComplaintForm onBack={() => setCurrentView('dashboard')} />;
+  }
+
+  if (currentView === 'view-complaint' && selectedComplaintId) {
+    const complaint = complaints.find(c => c.id === selectedComplaintId);
+    return <ComplaintDetails complaint={complaint} onBack={() => setCurrentView('dashboard')} />;
+  }
+
+  if (currentView === 'legal-resources') {
+    return <LegalResources onBack={() => setCurrentView('dashboard')} />;
   }
 
   return (
@@ -103,6 +151,17 @@ const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
               </CardContent>
             </Card>
 
+            <Card className="group cursor-pointer hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white/80 backdrop-blur-sm border-0 shadow-xl"
+                  onClick={() => setCurrentView('legal-resources')}>
+              <CardContent className="p-8 text-center">
+                <div className="mx-auto mb-4 p-4 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <FileText className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="font-bold text-xl text-gray-900 mb-2">Legal Resources</h3>
+                <p className="text-gray-600 leading-relaxed">Know your rights and legal procedures</p>
+              </CardContent>
+            </Card>
+
             <Card className="group cursor-pointer hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white/80 backdrop-blur-sm border-0 shadow-xl">
               <CardContent className="p-8 text-center">
                 <div className="mx-auto mb-4 p-4 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300">
@@ -110,16 +169,6 @@ const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
                 </div>
                 <h3 className="font-bold text-xl text-gray-900 mb-2">Voice Assistance</h3>
                 <p className="text-gray-600 leading-relaxed">Get help in Telugu, Hindi, or English</p>
-              </CardContent>
-            </Card>
-
-            <Card className="group cursor-pointer hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white/80 backdrop-blur-sm border-0 shadow-xl">
-              <CardContent className="p-8 text-center">
-                <div className="mx-auto mb-4 p-4 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <FileText className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="font-bold text-xl text-gray-900 mb-2">Legal Resources</h3>
-                <p className="text-gray-600 leading-relaxed">Know your rights and legal procedures</p>
               </CardContent>
             </Card>
           </div>
@@ -136,6 +185,7 @@ const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
                     <div>
                       <CardTitle className="text-xl font-bold text-gray-900">{complaint.title}</CardTitle>
                       <p className="text-gray-600 font-medium">FIR No: {complaint.id}</p>
+                      <p className="text-sm text-gray-500 mt-1">{complaint.location}</p>
                     </div>
                     <Badge className={getStatusColor(complaint.status) + " px-3 py-1 shadow-lg"}>
                       {complaint.status}
@@ -149,6 +199,8 @@ const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
                       <span className="text-gray-600 font-medium">Officer: {complaint.officer}</span>
                     </div>
                     
+                    <p className="text-gray-700 text-sm">{complaint.description}</p>
+                    
                     <div className="space-y-3">
                       <div className="flex justify-between text-sm">
                         <span className="font-semibold text-gray-900">Investigation Progress</span>
@@ -158,7 +210,8 @@ const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
                     </div>
 
                     <div className="flex space-x-3 pt-4">
-                      <Button size="sm" className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg border-0">
+                      <Button size="sm" className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg border-0"
+                              onClick={() => handleViewComplaint(complaint.id)}>
                         <Eye className="h-4 w-4 mr-2" />
                         View Details
                       </Button>
@@ -172,35 +225,44 @@ const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
               </Card>
             ))}
           </div>
+        </div>
 
-          {complaints.length === 0 && (
-            <Card className="text-center py-16 bg-white/80 backdrop-blur-sm border-0 shadow-xl">
-              <CardContent>
-                <div className="mx-auto mb-6 p-6 bg-gradient-to-br from-gray-400 to-gray-500 rounded-3xl shadow-lg w-fit">
-                  <FileText className="h-12 w-12 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">No Complaints Filed</h3>
-                <p className="text-gray-600 mb-8 text-lg">You haven't filed any complaints yet.</p>
-                <Button onClick={() => setCurrentView('new-complaint')} className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg px-8 py-3 text-lg">
-                  <Plus className="h-5 w-5 mr-2" />
-                  File Your First Complaint
-                </Button>
-              </CardContent>
-            </Card>
-          )}
+        {/* Emergency Section */}
+        <div className="mt-16 bg-gradient-to-r from-red-500/10 to-orange-500/10 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-red-200/20">
+          <div className="flex items-center mb-6">
+            <AlertTriangle className="h-8 w-8 text-red-600 mr-3" />
+            <h3 className="text-2xl font-bold text-gray-900">Emergency Contact</h3>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center">
+              <Phone className="h-12 w-12 text-red-600 mx-auto mb-3" />
+              <h4 className="font-bold text-lg text-gray-900 mb-2">Police Emergency</h4>
+              <p className="text-3xl font-bold text-red-600">100</p>
+            </div>
+            <div className="text-center">
+              <Phone className="h-12 w-12 text-pink-600 mx-auto mb-3" />
+              <h4 className="font-bold text-lg text-gray-900 mb-2">Women Helpline</h4>
+              <p className="text-3xl font-bold text-pink-600">1091</p>
+            </div>
+            <div className="text-center">
+              <Phone className="h-12 w-12 text-blue-600 mx-auto mb-3" />
+              <h4 className="font-bold text-lg text-gray-900 mb-2">Cybercrime</h4>
+              <p className="text-3xl font-bold text-blue-600">1930</p>
+            </div>
+          </div>
         </div>
 
         {/* Help Section */}
-        <div className="mt-16 bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl border-0">
+        <div className="mt-8 bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl border-0">
           <h3 className="text-2xl font-bold text-gray-900 mb-6">Need Help?</h3>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="text-center md:text-left">
-              <h4 className="font-bold text-lg text-gray-900 mb-3">Emergency Numbers</h4>
-              <p className="text-gray-600 text-lg">Police: <span className="font-bold text-red-600">100</span> | Women Helpline: <span className="font-bold text-red-600">1091</span></p>
+              <h4 className="font-bold text-lg text-gray-900 mb-3">24/7 Support</h4>
+              <p className="text-gray-600 text-lg">AI assistance available in Telugu, Hindi, and English</p>
             </div>
             <div className="text-center md:text-left">
-              <h4 className="font-bold text-lg text-gray-900 mb-3">Support</h4>
-              <p className="text-gray-600 text-lg">24/7 AI assistance available in your language</p>
+              <h4 className="font-bold text-lg text-gray-900 mb-3">Legal Aid</h4>
+              <p className="text-gray-600 text-lg">Free legal consultation for your cases</p>
             </div>
           </div>
         </div>
