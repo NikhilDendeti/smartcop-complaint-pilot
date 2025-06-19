@@ -64,7 +64,7 @@ const OfficerInterface = ({ onBack }: OfficerInterfaceProps) => {
       priority: 'Low',
       location: 'Jubilee Hills, Hyderabad',
       hasAudio: false,
-      transcript: 'మా పొరుగువాడు మా భూమిలో అతిక్రమణ చేస్తున్నాడు. అతను గేటు వేసి మా దారిని మూసేశాడు। ఇది చాలా రోజులుగా జరుగుతోంది। మేము చాలాసార్లు చెప్పాము కానీ వినట్లేదు.',
+      transcript: 'మా పొరుగువాడు మా భూమిలో అతిక్రమణ చేస్తున్నాడు. అతను గేటు వేసి మా దారిని మూసేశాడు. ఇది చాలా రోజులుగా జరుగుతోంది. మేము చాలాసార్లు చెప్పాము కానీ వినట్లేదు.',
       suggestedIPC: ['Section 441 - Criminal trespass', 'Section 447 - Criminal trespass', 'Section 268 - Public nuisance'],
       audioUrl: '#',
       assignedOfficer: 'Sub-Inspector Ram Kumar',
@@ -148,66 +148,66 @@ const OfficerInterface = ({ onBack }: OfficerInterfaceProps) => {
       {/* Header */}
       <header className="bg-white shadow-sm border-b-2 border-orange-400">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center space-x-3">
               <Button variant="ghost" onClick={onBack} size="sm">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back
               </Button>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Officer Dashboard</h1>
-                <p className="text-sm text-gray-600">Manage complaints and investigations</p>
+                <h1 className="text-xl md:text-2xl font-bold text-gray-900">Officer Dashboard</h1>
+                <p className="text-xs md:text-sm text-gray-600">Manage complaints and investigations</p>
               </div>
             </div>
-            <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200">
+            <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200 text-xs md:text-sm">
               Police Officer Portal
             </Badge>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-6 md:py-8">
         {/* Stats Overview */}
-        <div className="grid md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
           <Card className="hover:shadow-lg transition-shadow">
-            <CardContent className="p-6 text-center">
-              <AlertCircle className="h-8 w-8 text-yellow-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{pendingComplaints.length}</div>
-              <div className="text-sm text-gray-600">Pending Review</div>
+            <CardContent className="p-4 md:p-6 text-center">
+              <AlertCircle className="h-6 w-6 md:h-8 md:w-8 text-yellow-600 mx-auto mb-2" />
+              <div className="text-xl md:text-2xl font-bold">{pendingComplaints.length}</div>
+              <div className="text-xs md:text-sm text-gray-600">Pending Review</div>
             </CardContent>
           </Card>
           
           <Card className="hover:shadow-lg transition-shadow">
-            <CardContent className="p-6 text-center">
-              <Clock className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{underInvestigation.length}</div>
-              <div className="text-sm text-gray-600">Under Investigation</div>
+            <CardContent className="p-4 md:p-6 text-center">
+              <Clock className="h-6 w-6 md:h-8 md:w-8 text-blue-600 mx-auto mb-2" />
+              <div className="text-xl md:text-2xl font-bold">{underInvestigation.length}</div>
+              <div className="text-xs md:text-sm text-gray-600">Under Investigation</div>
             </CardContent>
           </Card>
           
           <Card className="hover:shadow-lg transition-shadow">
-            <CardContent className="p-6 text-center">
-              <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{resolvedComplaints.length}</div>
-              <div className="text-sm text-gray-600">Resolved</div>
+            <CardContent className="p-4 md:p-6 text-center">
+              <CheckCircle className="h-6 w-6 md:h-8 md:w-8 text-green-600 mx-auto mb-2" />
+              <div className="text-xl md:text-2xl font-bold">{resolvedComplaints.length}</div>
+              <div className="text-xs md:text-sm text-gray-600">Resolved</div>
             </CardContent>
           </Card>
           
           <Card className="hover:shadow-lg transition-shadow">
-            <CardContent className="p-6 text-center">
-              <Mic className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold">{voiceComplaints.length}</div>
-              <div className="text-sm text-gray-600">Voice Complaints</div>
+            <CardContent className="p-4 md:p-6 text-center">
+              <Mic className="h-6 w-6 md:h-8 md:w-8 text-purple-600 mx-auto mb-2" />
+              <div className="text-xl md:text-2xl font-bold">{voiceComplaints.length}</div>
+              <div className="text-xs md:text-sm text-gray-600">Voice Complaints</div>
             </CardContent>
           </Card>
         </div>
 
-        <Tabs defaultValue="all" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+        <Tabs defaultValue="all" className="space-y-4 md:space-y-6">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 text-xs md:text-sm">
             <TabsTrigger value="all">All Complaints</TabsTrigger>
-            <TabsTrigger value="pending">Pending Review ({pendingComplaints.length})</TabsTrigger>
-            <TabsTrigger value="investigation">Under Investigation</TabsTrigger>
-            <TabsTrigger value="voice">Voice Complaints</TabsTrigger>
+            <TabsTrigger value="pending">Pending ({pendingComplaints.length})</TabsTrigger>
+            <TabsTrigger value="investigation" className="hidden md:inline-flex">Under Investigation</TabsTrigger>
+            <TabsTrigger value="voice">Voice</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all" className="space-y-4">
@@ -235,10 +235,10 @@ const OfficerInterface = ({ onBack }: OfficerInterfaceProps) => {
               ))
             ) : (
               <Card>
-                <CardContent className="p-8 text-center">
-                  <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">No Pending Complaints</h3>
-                  <p className="text-gray-600">All complaints have been reviewed and assigned.</p>
+                <CardContent className="p-6 md:p-8 text-center">
+                  <CheckCircle className="h-12 w-12 md:h-16 md:w-16 text-green-600 mx-auto mb-4" />
+                  <h3 className="text-base md:text-lg font-semibold mb-2">No Pending Complaints</h3>
+                  <p className="text-sm md:text-base text-gray-600">All complaints have been reviewed and assigned.</p>
                 </CardContent>
               </Card>
             )}
@@ -277,23 +277,26 @@ const OfficerInterface = ({ onBack }: OfficerInterfaceProps) => {
 const ComplaintCard = ({ complaint, onView, getStatusColor, getPriorityColor }: any) => (
   <Card className="hover:shadow-md transition-shadow">
     <CardHeader className="pb-3">
-      <div className="flex justify-between items-start">
-        <div className="flex-1">
-          <div className="flex items-center space-x-3 mb-2">
-            <CardTitle className="text-lg">{complaint.title}</CardTitle>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mb-2 gap-2">
+            <CardTitle className="text-base md:text-lg truncate">{complaint.title}</CardTitle>
             {complaint.urgencyScore > 80 && (
-              <Badge className="bg-red-100 text-red-800 border-red-200 animate-pulse">URGENT</Badge>
+              <Badge className="bg-red-100 text-red-800 border-red-200 animate-pulse text-xs whitespace-nowrap">URGENT</Badge>
             )}
           </div>
-          <p className="text-sm text-gray-600">
-            FIR: {complaint.id} • Citizen: {complaint.citizen} • Phone: {complaint.citizenPhone}
+          <p className="text-xs md:text-sm text-gray-600 break-words">
+            FIR: {complaint.id} • Citizen: {complaint.citizen}
+          </p>
+          <p className="text-xs md:text-sm text-gray-600 break-all">
+            Phone: {complaint.citizenPhone}
           </p>
         </div>
-        <div className="flex space-x-2">
-          <Badge className={getPriorityColor(complaint.priority)}>
+        <div className="flex flex-row md:flex-col space-x-2 md:space-x-0 md:space-y-2">
+          <Badge className={getPriorityColor(complaint.priority) + " text-xs"}>
             {complaint.priority}
           </Badge>
-          <Badge className={getStatusColor(complaint.status)}>
+          <Badge className={getStatusColor(complaint.status) + " text-xs"}>
             {complaint.status}
           </Badge>
         </div>
@@ -301,14 +304,14 @@ const ComplaintCard = ({ complaint, onView, getStatusColor, getPriorityColor }: 
     </CardHeader>
     <CardContent>
       <div className="space-y-4">
-        <div className="grid md:grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 text-xs md:text-sm">
           <div>
             <span className="font-medium">Date Filed:</span> {complaint.date}
           </div>
-          <div>
+          <div className="truncate">
             <span className="font-medium">Location:</span> {complaint.location}
           </div>
-          <div>
+          <div className="truncate">
             <span className="font-medium">Assigned Officer:</span> {complaint.assignedOfficer}
           </div>
           <div>
@@ -320,36 +323,36 @@ const ComplaintCard = ({ complaint, onView, getStatusColor, getPriorityColor }: 
         </div>
 
         {/* Audio Transcript */}
-        <div className="bg-gray-50 p-4 rounded-lg">
+        <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
           <div className="flex items-center justify-between mb-2">
-            <h4 className="font-medium">Voice Transcript</h4>
+            <h4 className="font-medium text-xs md:text-sm">Voice Transcript</h4>
             {complaint.hasAudio && (
-              <Button size="sm" variant="outline">
-                <Volume2 className="h-4 w-4 mr-2" />
+              <Button size="sm" variant="outline" className="text-xs">
+                <Volume2 className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
                 Play Audio
               </Button>
             )}
           </div>
-          <p className="text-sm text-gray-700 line-clamp-3">{complaint.transcript}</p>
+          <p className="text-xs md:text-sm text-gray-700 line-clamp-2 md:line-clamp-3">{complaint.transcript}</p>
         </div>
 
         {/* Evidence & Witnesses */}
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h4 className="font-medium mb-2 text-sm">Evidence Available</h4>
+            <h4 className="font-medium mb-2 text-xs md:text-sm">Evidence Available</h4>
             <div className="space-y-1">
               {complaint.evidence.slice(0, 2).map((item: string, index: number) => (
-                <Badge key={index} variant="outline" className="text-xs mr-1 mb-1">
+                <Badge key={index} variant="outline" className="text-xs mr-1 mb-1 break-words">
                   {item}
                 </Badge>
               ))}
             </div>
           </div>
           <div>
-            <h4 className="font-medium mb-2 text-sm">Witnesses</h4>
+            <h4 className="font-medium mb-2 text-xs md:text-sm">Witnesses</h4>
             <div className="space-y-1">
               {complaint.witnesses.slice(0, 1).map((witness: string, index: number) => (
-                <p key={index} className="text-xs text-gray-600">{witness}</p>
+                <p key={index} className="text-xs text-gray-600 break-words">{witness}</p>
               ))}
             </div>
           </div>
@@ -357,10 +360,10 @@ const ComplaintCard = ({ complaint, onView, getStatusColor, getPriorityColor }: 
 
         {/* Suggested IPC Sections */}
         <div>
-          <h4 className="font-medium mb-2">AI Suggested IPC Sections</h4>
-          <div className="flex flex-wrap gap-2">
+          <h4 className="font-medium mb-2 text-xs md:text-sm">AI Suggested IPC Sections</h4>
+          <div className="flex flex-wrap gap-1 md:gap-2">
             {complaint.suggestedIPC.map((section: string, index: number) => (
-              <Badge key={index} variant="outline" className="bg-blue-50 text-blue-700">
+              <Badge key={index} variant="outline" className="bg-blue-50 text-blue-700 text-xs break-words">
                 {section}
               </Badge>
             ))}
@@ -368,17 +371,17 @@ const ComplaintCard = ({ complaint, onView, getStatusColor, getPriorityColor }: 
         </div>
 
         {/* Actions */}
-        <div className="flex space-x-2 pt-4 border-t">
-          <Button size="sm" variant="outline" className="flex-1" onClick={() => onView(complaint.id)}>
-            <Eye className="h-4 w-4 mr-2" />
+        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 pt-4 border-t">
+          <Button size="sm" variant="outline" className="flex-1 text-xs md:text-sm" onClick={() => onView(complaint.id)}>
+            <Eye className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
             View Details
           </Button>
-          <Button size="sm" variant="outline" className="flex-1">
-            <UserPlus className="h-4 w-4 mr-2" />
+          <Button size="sm" variant="outline" className="flex-1 text-xs md:text-sm">
+            <UserPlus className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
             Assign Officer
           </Button>
           <Select>
-            <SelectTrigger className="w-32">
+            <SelectTrigger className="w-full sm:w-32 text-xs md:text-sm">
               <SelectValue placeholder="Update Status" />
             </SelectTrigger>
             <SelectContent>
