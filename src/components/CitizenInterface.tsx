@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,13 +7,14 @@ import { ArrowLeft, Mic, Plus, Eye, FileText, Download, Sparkles, TrendingUp, Ph
 import VoiceComplaintForm from "./VoiceComplaintForm";
 import ComplaintDetails from "./ComplaintDetails";
 import LegalResources from "./LegalResources";
+import VoiceAssistance from "./VoiceAssistance";
 
 interface CitizenInterfaceProps {
   onBack: () => void;
 }
 
 const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
-  const [currentView, setCurrentView] = useState<'dashboard' | 'new-complaint' | 'view-complaint' | 'legal-resources'>('dashboard');
+  const [currentView, setCurrentView] = useState<'dashboard' | 'new-complaint' | 'view-complaint' | 'legal-resources' | 'voice-assistance'>('dashboard');
   const [selectedComplaintId, setSelectedComplaintId] = useState<string | null>(null);
 
   // Comprehensive mock complaint data
@@ -95,6 +95,10 @@ const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
     return <LegalResources onBack={() => setCurrentView('dashboard')} />;
   }
 
+  if (currentView === 'voice-assistance') {
+    return <VoiceAssistance onBack={() => setCurrentView('dashboard')} />;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
       {/* Background decorative elements */}
@@ -162,7 +166,8 @@ const CitizenInterface = ({ onBack }: CitizenInterfaceProps) => {
               </CardContent>
             </Card>
 
-            <Card className="group cursor-pointer hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white/80 backdrop-blur-sm border-0 shadow-xl">
+            <Card className="group cursor-pointer hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white/80 backdrop-blur-sm border-0 shadow-xl"
+                  onClick={() => setCurrentView('voice-assistance')}>
               <CardContent className="p-6 md:p-8 text-center">
                 <div className="mx-auto mb-4 p-3 md:p-4 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                   <Mic className="h-6 w-6 md:h-8 md:w-8 text-white" />
